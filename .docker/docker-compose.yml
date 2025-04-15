@@ -1,0 +1,50 @@
+version: "3"
+
+networks:
+    app:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 192.168.0.0/24
+
+volumes:
+    app:
+
+services:
+    db:
+        image: mysql:8.0.33
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - "./.dbdata:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        ports:
+            - "3307:3306"
+        networks:
+            - app
+    php:
+        build:
+            context: ./php
+            args:
+                TIMEZONE: ${TIMEZONE}
+                APP_PATH_CONTAINER: ${APP_PATH_CONTAINER}
+        environment:
+            - PHP_IDE_CONFIG=serverName=grapheme
+        volumes:
+            - ${APP_PATH}:${APP_PATH_CONTAINER}
+        networks:
+            - app
+    nginx:
+        build:
+            context: ./nginx
+        environment:
+            VIRTUAL_HOST: cp.pushkinopark.ru
+        volumes:
+            - ${APP_PATH}:${APP_PATH_CONTAINER}
+        networks:
+            - app
+        env_file:
+            - .env
