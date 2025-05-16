@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
@@ -81,6 +82,16 @@ class Stock extends Resource
             Date::make(__('Начало'), 'start_date'),
             Date::make(__('Конец'), 'end_date'),
             CkEditor::make(__('Описание'), 'description')->hideFromIndex(),
+
+            File::make(__('PDF файл с правилами'), 'rulesFile')
+                ->disk('public_stock')
+                ->path('stocks/rules')
+                ->acceptedTypes('.pdf')
+                ->help('Загрузите PDF файл с правилами акции')
+                ->resolveUsing(function ($value) {
+                    return $value ? config('filesystems.disks.public_stock.url')  . '/' . $value : null;
+                }),
+
             Text::make(__('Владелец акции'), 'storeName')->hideFromIndex(),
 
             Heading::make(__('Главный баннер')),

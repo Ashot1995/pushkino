@@ -20,6 +20,7 @@ class Stock extends Model
         'otherAdditionalBanners' => 'json',
         'linksToLanding' => 'json',
         'gallery' => 'json',
+        'rulesFile' => 'string', // Add this line
     ];
 
     protected $repeaters = [
