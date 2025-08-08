@@ -132,6 +132,13 @@ class StaticPageController extends Controller
                 'managerName' => Arr::get($staticPage->fields, 'rentManagerName'),
                 'managerEmail' => Arr::get($staticPage->fields, 'rentManagerEmail'),
             ],
+            'rentalPremises1' => collect($staticPage->contactsRentManagers)->map(function (array $item) {
+                return [
+                    'phoneNumber' => Arr::get($item, 'fields.phone'),
+                    'managerName' => Arr::get($item, 'fields.managerName'),
+                    'managerEmail' => Arr::get($item, 'fields.managerEmail'),
+                ];
+            }),
             'marketing' => [
                 'phoneNumber' => Arr::get($staticPage->fields, 'adManagerPhone'),
                 'managerName' => Arr::get($staticPage->fields, 'adManagerName'),
