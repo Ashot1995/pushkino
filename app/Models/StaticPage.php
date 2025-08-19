@@ -25,7 +25,6 @@ class StaticPage extends Model
 
         'contactsAdminPhone' => 'json',
         'contactsOtherContactsList' => 'json',
-        'contactsRentManagers' => 'json',
 
         // Арендаторам
 

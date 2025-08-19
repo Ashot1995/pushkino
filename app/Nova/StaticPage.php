@@ -8,7 +8,6 @@ use App\Nova\Repeater\AboutGalleryItem;
 use App\Nova\Repeater\AboutTextBannersItem;
 use App\Nova\Repeater\ContactsAdminPhonesItem;
 use App\Nova\Repeater\ContactsOtherContactsItem;
-use App\Nova\Repeater\ContactsRentManagersItem;
 use App\Nova\Repeater\TenantsAdvantagesItem;
 use App\Nova\Repeater\TenantsContactsItem;
 use Illuminate\Http\Request;
@@ -212,10 +211,6 @@ class StaticPage extends Resource
             Text::make(__('Номер телефона'), 'fields->rentManagerPhone')->hideFromIndex(),
             Text::make(__('Имя'), 'fields->rentManagerName')->hideFromIndex(),
             Text::make(__('E-mail'), 'fields->rentManagerEmail')->hideFromIndex(),
-
-            Repeater::make(__('Менеджеры'), 'contactsRentManagers')->repeatables([
-                ContactsRentManagersItem::make(),
-            ])->asJson()->hideFromIndex(),
 
             Heading::make(__('Менеджер по рекламе'))->hideFromIndex(),
             Text::make(__('Номер телефона'), 'fields->adManagerPhone')->hideFromIndex(),
